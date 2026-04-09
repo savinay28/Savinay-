@@ -3,18 +3,16 @@ import { Geist, Geist_Mono, Space_Grotesk, Noto_Serif } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 
 const notoSerifHeading = Noto_Serif({subsets:['latin'],variable:'--font-heading'});
 
-const spaceGrotesk = Space_Grotesk({subsets:['latin'],variable:'--font-sans'})
 const spaceGrotesk = Space_Grotesk({subsets:['latin'],variable:'--font-sans'})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
-
-import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 
 export default function RootLayout({
   children,
