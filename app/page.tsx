@@ -10,11 +10,10 @@ export default function Page() {
   const [loadingMode, setLoadingMode] = useState<"quiz" | "flashcard" | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, mode: "quiz" | "flashcard") => {
-    e.preventDefault();
+  const handleSubmit = async (form: HTMLFormElement, mode: "quiz" | "flashcard") => {
     setLoadingMode(mode);
     
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(form);
     formData.append("mode", mode);
     formData.append("count", "10");
     if (file) {
