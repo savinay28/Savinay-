@@ -7,11 +7,14 @@ import { cn } from "@/lib/utils";
 const notoSerifHeading = Noto_Serif({subsets:['latin'],variable:'--font-heading'});
 
 const spaceGrotesk = Space_Grotesk({subsets:['latin'],variable:'--font-sans'})
+const spaceGrotesk = Space_Grotesk({subsets:['latin'],variable:'--font-sans'})
 
 const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 
 export default function RootLayout({
   children,
@@ -25,7 +28,11 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", spaceGrotesk.variable, notoSerifHeading.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ConvexClientProvider>
+            {children}
+          </ConvexClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
