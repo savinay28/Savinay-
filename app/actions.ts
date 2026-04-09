@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import PDFParser from "pdf2json";
 import mammoth from "mammoth";
 import { ConvexHttpClient } from "convex/browser";
-import { anyApi } from "convex/server";
 
 const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL || "https://dummy-123.convex.cloud");
 
@@ -53,7 +52,7 @@ export async function generateContent(formData: FormData) {
   const result = await generateQuizOrFlashcard(extractedText, mode, count);
   
   // Save to Convex History
-  await convex.mutation(anyApi.history.saveHistory, {
+  await convex.mutation("history:saveHistory" as any, {
     topic: topicName,
     mode: mode,
     data: result,
