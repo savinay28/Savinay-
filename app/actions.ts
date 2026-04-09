@@ -7,7 +7,7 @@ import mammoth from "mammoth";
 import { ConvexHttpClient } from "convex/browser";
 import { anyApi } from "convex/server";
 
-const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL || "https://example.convex.cloud");
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL || "https://dummy-123.convex.cloud");
 
 async function extractTextFromPDF(buffer: Buffer): Promise<string> {
   return new Promise((resolve, reject) => {

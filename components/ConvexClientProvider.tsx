@@ -5,6 +5,6 @@ import { ReactNode, useState } from "react";
 
 export function ConvexClientProvider({ children }: { children: ReactNode }) {
   // Use state so it's not initialized multiple times in development mode across HMR boundaries
-  const [convex] = useState(() => new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL || "https://example.convex.cloud"));
+  const [convex] = useState(() => new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL || "https://dummy-123.convex.cloud"));
   return <ConvexProvider client={convex}>{children}</ConvexProvider>;
 }
