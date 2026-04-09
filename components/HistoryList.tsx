@@ -1,12 +1,12 @@
 "use client";
 
 import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
+import { anyApi } from "convex/server";
 import { useRouter } from "next/navigation";
 import { Loader2, Clock } from "lucide-react";
 
 export function HistoryList() {
-  const history = useQuery(api.history.getHistory);
+  const history = useQuery(anyApi.history.getHistory);
   const router = useRouter();
 
   if (history === undefined) {

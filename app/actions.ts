@@ -5,9 +5,9 @@ import { redirect } from "next/navigation";
 import PDFParser from "pdf2json";
 import mammoth from "mammoth";
 import { ConvexHttpClient } from "convex/browser";
-import { api } from "@/convex/_generated/api";
+import { anyApi } from "convex/server";
 
-const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL || "https://example.convex.cloud");
 
 async function extractTextFromPDF(buffer: Buffer): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -53,7 +53,7 @@ export async function generateContent(formData: FormData) {
   const result = await generateQuizOrFlashcard(extractedText, mode, count);
   
   // Save to Convex History
-  await convex.mutation(api.history.saveHistory, {
+  await convex.mutation(anyApi.history.saveHistory, {
     topic: topicName,
     mode: mode,
     data: result,
