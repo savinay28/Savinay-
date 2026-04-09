@@ -4,6 +4,10 @@ import { generateQuizOrFlashcard } from "@/lib/ai";
 import { redirect } from "next/navigation";
 import PDFParser from "pdf2json";
 import mammoth from "mammoth";
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "@/convex/_generated/api";
+
+const convex = new ConvexHttpClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
 async function extractTextFromPDF(buffer: Buffer): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -25,8 +29,10 @@ export async function generateContent(formData: FormData) {
   const count = parseInt((formData.get("count") as string) || "10", 10);
 
   let extractedText = notesText || "";
+  let topicName = "Saved " + (mode === "quiz" ? "Quiz" : "Flashcards");
 
   if (file && file.size > 0) {
+    topicName = file.name;
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
@@ -45,7 +51,14 @@ export async function generateContent(formData: FormData) {
   }
 
   const result = await generateQuizOrFlashcard(extractedText, mode, count);
-  const encodedData = encodeURIComponent(JSON.stringify(result));
+  
+  // Save to Convex History
+  await convex.mutation(api.history.saveHistory, {
+    topic: topicName,
+    mode: mode,
+    data: result,
+  });
 
+  const encodedData = encodeURIComponent(JSON.stringify(result));
   redirect(`/${mode}?data=${encodedData}`);
 }
